@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Kilimo Bora | Fresh Farm Goods from Kenyan Farmers</title>
+  <!-- Google Fonts + Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fef8e7;
+      color: #2c2b28;
+      line-height: 1.4;
+    }
+
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 1.8rem;
+    }
+
+    /* header with kenyan vibe */
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid #7b9c3f;
+    }
+    .logo h1 {
+
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #2b5e2b, #e6b422);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo p 
+    {
+      font-size: 0.8rem;
+      color: #5e6e3e;
+      font-weight: 500;
+    }
+    .cart-badge 
+    {
+      background: rgb(223, 96, 96);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      font-weight: 600;
+    }
+    .cart-badge i 
+    {
+      color: #d1a41c;
+      margin-right: 6px;
+    }
+
+    /* two column layout */
+    .marketplace 
+    {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+    }
+
+    /* product grid */
+    .products-section h2 
+    {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .product-grid 
+    {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.6rem;
+    }
+    .product-card 
+    {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.2s;
+      box-shadow: 0 5px 15px rgba(10, 10, 10, 0.05);
+      border: 1px solid #e2ddd2;
+    }
+    .product-card:hover 
+    {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 25px -10px rgba(48, 45, 45, 0.1);
+    }
+    .product-img 
+    {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      background: #e9f0da;
+    }
+    .product-info 
+    {
+      padding: 1rem 1rem 1.2rem;
+    }
+    .product-title 
+    {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+    .unit 
+    {
+      font-size: 0.7rem;
+      color: #6b6b4b;
+      margin-bottom: 0.8rem;
+    }
+    /* price & selectors */
+    .price-preview 
+    {
+      background: #faf3e0;
+      padding: 0.5rem;
+      border-radius: 1rem;
+      margin: 0.8rem 0;
+      text-align: center;
+    }
+    .final-price 
+    {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #2b5e2b;
+    }
+    .price-note 
+    {
+      font-size: 0.7rem;
+      color: #8f7a4b;
+    }
+    .options-group 
+    {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .opt-select 
+    {
+      flex: 1;
+      font-size: 0.75rem;
+      padding: 0.4rem;
+      border-radius: 30px;
+      border: 1px solid #b4aea0;
+      background: rgb(240, 235, 235);
+      font-weight: 500;
+    }
+    .quantity-row 
+    {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0 12px;
+    }
+    .qty-selector 
+    {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f2efea;
+      padding: 0.2rem 0.6rem;
+      border-radius: 40px;
+    }
+    .qty-btn 
+    {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 28px;
+      border-radius: 50%;
+      color: #a6d14e;
+    }
+    .add-to-cart-btn 
+    {
+      width: 100%;
+      background: #20b320;
+      border: none;
+      padding: 0.6rem;
+      border-radius: 2rem;
+      color: rgb(238, 232, 232);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 6px;
+    }
+    .add-to-cart-btn:hover 
+    {
+      background: #399739;
+    }
+    .stock-badge 
+    {
+      font-size: 0.7rem;
+      display: inline-block;
+      margin-top: 6px;
+      background: #eef2e6;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    /* cart sidebar */
+    .cart-sidebar 
+    {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      border: 1px solid #f0e2cf;
+      position: sticky;
+      top: 1rem;
+      height: fit-content;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-header 
+    {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #efe3c9;
+      padding-bottom: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .clear-cart 
+    {
+      background: none;
+      border: none;
+      color: #b67e2e;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .cart-items 
+    {
+      overflow-y: auto;
+      flex: 1;
+      max-height: 420px;
+      margin-bottom: 1rem;
+    }
+    .cart-empty 
+    {
+      text-align: center;
+      padding: 2rem 0;
+      color: #b9a77a;
+    }
+    .cart-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #f4e9db;
+      padding-bottom: 0.8rem;
+    }
+    .cart-item-img 
+    {
+      width: 55px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .cart-item-details 
+    {
+      flex: 2;
+    }
+    .cart-item-name 
+    {
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .cart-item-options 
+    {
+      font-size: 0.7rem;
+      color: #8f7a4b;
+    }
+    .cart-item-price 
+    {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #2b5e2b;
+    }
+    .cart-item-actions 
+    {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 5px;
+    }
+    .cart-qty-btn 
+    {
+      background: #efede8;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .cart-remove 
+    {
+      background: none;
+      border: none;
+      color: #c7a252;
+      cursor: pointer;
+    }
+    .cart-total 
+    {
+      border-top: 2px dashed #e6d5bc;
+      padding-top: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    .checkout 
+    {
+      background: #e6b422;
+      border: none;
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 40px;
+      font-weight: 700;
+      margin-top: 1rem;
+      cursor: pointer;
+      color: #2c2b28;
+    }
+
+    @media (max-width: 820px) 
+    {
+      .marketplace 
+      {
+        grid-template-columns: 1fr;
+      }
+      .app-container 
+      {
+        padding: 1rem;
+      }
+    }
+    button 
+    {
+      font-family: inherit;
+    }
+    i 
+    {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <header class="main-header">
+    <div class="logo">
+      <h1><i class="fas fa-seedling"></i> Kilimo Bora</h1>
+      <p>🌾 direct from Kenyan farmers — fair & dynamic pricing</p>
+    </div>
+    <div class="cart-badge">
+      <i class="fas fa-shopping-basket"></i> <span id="cartItemCount">0</span> items
+    </div>
+  </header>
+
+  <div class="marketplace">
+    <!-- PRODUCT SECTION -->
+    <section class="products-section">
+      <h2><i class="fas fa-tractor"></i> Fresh farm produce</h2>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <!-- CART SIDEBAR -->
+    <aside class="cart-sidebar">
+      <div class="cart-header">
+        <h4><i class="fas fa-shopping-cart"></i> Your basket</h4>
+        <button class="clear-cart" id="clearCartBtn"><i class="fas fa-trash-alt"></i> Clear all</button>
+      </div>
+      <div class="cart-items" id="cartItemsList">
+        <div class="cart-empty">🛒 Cart is empty. Add some farm goodness!</div>
+      </div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">KES 0</span>
+      </div>
+      <button class="checkout" id="checkoutBtn"><i class="fas fa-hand-holding-heart"></i> Proceed to checkout</button>
+      <div style="font-size: 0.7rem; text-align:center; margin-top: 12px;">📍 Prices vary by location, demand, supplier & quality</div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  // ---------- PRODUCTS DATABASE (farm goods) ----------
+  const PRODUCTS = [
+    { id: "maize", name: "Maize (dry)", basePrice: 60, unit: "per kg", img: "https://picsum.photos/id/144/300/180" },
+    { id: "beans", name: "Mixed Beans", basePrice: 120, unit: "per kg", img: "https://picsum.photos/id/159/300/180" },
+    { id: "potatoes", name: "Irish Potatoes", basePrice: 80, unit: "per kg", img: "https://picsum.photos/id/157/300/180" },
+    { id: "tomatoes", name: "Fresh Tomatoes", basePrice: 100, unit: "per kg", img: "https://picsum.photos/id/110/300/180" },
+    { id: "onions", name: "Red Onions", basePrice: 90, unit: "per kg", img: "https://picsum.photos/id/122/300/180" },
+    { id: "kale", name: "Sukuma Wiki", basePrice: 40, unit: "per bunch", img: "https://picsum.photos/id/104/300/180" },
+    { id: "milk", name: "Fresh Milk", basePrice: 50, unit: "per litre", img: "https://picsum.photos/id/130/300/180" },
+    { id: "eggs", name: "Free-Range Eggs", basePrice: 15, unit: "per piece", img: "https://picsum.photos/id/102/300/180" }
+  ];
+
+  // Multipliers based on selection
+  const LOCATION_MULT = 
+  {
+    "Nairobi": 1.25,
+    "Kiambu": 1.0,
+    "Nakuru": 0.92,
+    "Kisumu": 0.95,
+    "Mombasa": 1.18,
+    "Eldoret": 0.88
+  };
+  const DEMAND_MULT = 
+  {
+    "Low": 0.85,
+    "Medium": 1.0,
+    "High": 1.30
+  };
+  const SUPPLIER_MULT = 
+  {
+    "Small-scale farmer": 1.0,
+    "Large-scale farmer": 0.92   // economies of scale, cheaper
+  };
+  const QUALITY_MULT = 
+  {
+    "Standard": 1.0,
+    "Premium": 1.28
+  };
+
+  // Helper: compute final price per unit
+  function computePrice(base, location, demand, supplier, quality) 
+  {
+    let mult = LOCATION_MULT[location] * DEMAND_MULT[demand] * SUPPLIER_MULT[supplier] * QUALITY_MULT[quality];
+    return +(base * mult).toFixed(2);
+  }
+
+  // Generate stock / availability message based on demand & supplier
+  function getAvailabilityNote(demand, supplier) 
+  {
+    if (demand === "High" && supplier === "Small-scale farmer") return "⚠️ Limited stock! Order soon";
+    if (demand === "High") return "🔥 High demand - few left";
+    if (demand === "Low") return "✅ Good availability, best prices";
+    return "✔️ In stock";
+  }
+
+  // Cart structure: each item stores { id, name, unit, quantity, selectedOptions, pricePerUnit, totalPrice, img }
+  let cart = [];  // array of objects
+
+  // Load cart from localStorage
+  function loadCart() 
+  {
+    const stored = localStorage.getItem("kilimoBoraCart");
+    if (stored) {
+      try {
+        let parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) 
+        {
+          cart = parsed;
+        }
+      } catch(e) {}
+    }
+    renderCartUI();
+    updateCartBadge();
+  }
+
+  function saveCart() 
+  {
+    localStorage.setItem("kilimoBoraCart", JSON.stringify(cart));
+  }
+
+  function updateCartBadge() 
+  {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById("cartItemCount").innerText = totalItems;
+  }
+
+  // Render product cards with dynamic selectors
+  function renderProducts() 
+  {
+    const grid = document.getElementById("productGrid");
+    if (!grid) return;
+    let html = "";
+    PRODUCTS.forEach(prod => 
+    {
+      // default selections
+      const defaultLocation = "Kiambu";
+      const defaultDemand = "Medium";
+      const defaultSupplier = "Small-scale farmer";
+      const defaultQuality = "Standard";
+      const defaultPrice = computePrice(prod.basePrice, defaultLocation, defaultDemand, defaultSupplier, defaultQuality);
+      html += `
+        <div class="product-card" data-prod-id="${prod.id}">
+          <img class="product-img" src="${prod.img}" alt="${prod.name}" loading="lazy" onerror="this.src='https://picsum.photos/id/180/300/180'">
+          <div class="product-info">
+            <div class="product-title">${prod.name}</div>
+            <div class="unit">${prod.unit}</div>
+            
+            <div class="options-group">
+              <select class="opt-select location-select" data-id="${prod.id}">
+                ${Object.keys(LOCATION_MULT).map(loc => `<option value="${loc}" ${loc === defaultLocation ? 'selected' : ''}>📍 ${loc}</option>`).join('')}
+              </select>
+              <select class="opt-select demand-select" data-id="${prod.id}">
+                ${Object.keys(DEMAND_MULT).map(d => `<option value="${d}" ${d === defaultDemand ? 'selected' : ''}>📈 Demand: ${d}</option>`).join('')}
+              </select>
+            </div>
+            <div class="options-group">
+              <select class="opt-select supplier-select" data-id="${prod.id}">
+                ${Object.keys(SUPPLIER_MULT).map(s => `<option value="${s}" ${s === defaultSupplier ? 'selected' : ''}>👩‍🌾 ${s}</option>`).join('')}
+              </select>
+              <select class="opt-select quality-select" data-id="${prod.id}">
+                ${Object.keys(QUALITY_MULT).map(q => `<option value="${q}" ${q === defaultQuality ? 'selected' : ''}>⭐ ${q}</option>`).join('')}
+              </select>
+            </div>
+            
+            <div class="price-preview">
+              <span class="final-price" id="priceDisplay-${prod.id}">KES ${defaultPrice}</span>
+              <div class="price-note">per ${prod.unit}</div>
+            </div>
+            <div class="stock-badge" id="stockMsg-${prod.id}">${getAvailabilityNote(defaultDemand, defaultSupplier)}</div>
+            
+            <div class="quantity-row">
+              <span>Quantity:</span>
+              <div class="qty-selector">
+                <button class="qty-btn decr-qty" data-id="${prod.id}">−</button>
+                <span id="qtyVal-${prod.id}">1</span>
+                <button class="qty-btn incr-qty" data-id="${prod.id}">+</button>
+              </div>
+            </div>
+            <button class="add-to-cart-btn" data-id="${prod.id}"><i class="fas fa-cart-plus"></i> Add to basket</button>
+          </div>
+        </div>
+      `;
+    });
+    grid.innerHTML = html;
+
+    // Attach dynamic price update listeners for each product
+    PRODUCTS.forEach(prod => {
+      const locSelect = document.querySelector(`.location-select[data-id="${prod.id}"]`);
+      const demandSelect = document.querySelector(`.demand-select[data-id="${prod.id}"]`);
+      const supplierSelect = document.querySelector(`.supplier-select[data-id="${prod.id}"]`);
+      const qualitySelect = document.querySelector(`.quality-select[data-id="${prod.id}"]`);
+      const priceSpan = document.getElementById(`priceDisplay-${prod.id}`);
+      const stockSpan = document.getElementById(`stockMsg-${prod.id}`);
+      
+      function updatePriceAndStock() 
+      {
+        const location = locSelect.value;
+        const demand = demandSelect.value;
+        const supplier = supplierSelect.value;
+        const quality = qualitySelect.value;
+        const newPrice = computePrice(prod.basePrice, location, demand, supplier, quality);
+        if (priceSpan) priceSpan.innerText = `KES ${newPrice}`;
+        if (stockSpan) stockSpan.innerText = getAvailabilityNote(demand, supplier);
+      }
+      locSelect.addEventListener('change', updatePriceAndStock);
+      demandSelect.addEventListener('change', updatePriceAndStock);
+      supplierSelect.addEventListener('change', updatePriceAndStock);
+      qualitySelect.addEventListener('change', updatePriceAndStock);
+      
+      // quantity buttons
+      const qtySpan = document.getElementById(`qtyVal-${prod.id}`);
+      const decr = document.querySelector(`.decr-qty[data-id="${prod.id}"]`);
+      const incr = document.querySelector(`.incr-qty[data-id="${prod.id}"]`);
+      let qty = 1;
+      if (decr && incr && qtySpan) 
+      {
+        decr.addEventListener('click', () => 
+        {
+          qty = Math.max(1, qty - 1);
+          qtySpan.innerText = qty;
+        });
+        incr.addEventListener('click', () => 
+        {
+          qty = qty + 1;
+          qtySpan.innerText = qty;
+        });
+      }
+      // attach add-to-cart with current selections & quantity
+      const addBtn = document.querySelector(`.add-to-cart-btn[data-id="${prod.id}"]`);
+      if (addBtn) 
+      {
+        addBtn.addEventListener('click', () => 
+        {
+          const location = locSelect.value;
+          const demand = demandSelect.value;
+          const supplier = supplierSelect.value;
+          const quality = qualitySelect.value;
+          let quantity = parseInt(document.getElementById(`qtyVal-${prod.id}`).innerText);
+          if (isNaN(quantity) || quantity < 1) quantity = 1;
+          const pricePerUnit = computePrice(prod.basePrice, location, demand, supplier, quality);
+          const totalItemPrice = +(pricePerUnit * quantity).toFixed(2);
+          const selectedOptions = { location, demand, supplier, quality };
+          
+          // create cart item (we'll push, but combine identical options? For simplicity allow duplicates per configuration)
+          // We can combine if same product and same options to keep cart clean.
+          const existingIndex = cart.findIndex(item => 
+            item.id === prod.id && 
+            item.selectedOptions.location === location &&
+            item.selectedOptions.demand === demand &&
+            item.selectedOptions.supplier === supplier &&
+            item.selectedOptions.quality === quality
+          );
+          if (existingIndex !== -1) 
+          {
+            cart[existingIndex].quantity += quantity;
+            cart[existingIndex].totalPrice = +(cart[existingIndex].pricePerUnit * cart[existingIndex].quantity).toFixed(2);
+          } else 
+          {
+            cart.push(
+              {
+              id: prod.id,
+              name: prod.name,
+              unit: prod.unit,
+              quantity: quantity,
+              selectedOptions: selectedOptions,
+              pricePerUnit: pricePerUnit,
+              totalPrice: totalItemPrice,
+              img: prod.img
+            });
+          }
+          saveCart();
+          renderCartUI();
+          updateCartBadge();
+          // provide subtle feedback
+          addBtn.style.transform = "scale(0.96)";
+          setTimeout(() => { addBtn.style.transform = ""; }, 150);
+        });
+      }
+    });
+  }
+
+  // Render cart UI
+  function renderCartUI() 
+  {
+    const cartContainer = document.getElementById("cartItemsList");
+    const totalSpan = document.getElementById("cartTotal");
+    if (!cartContainer) return;
+    
+    if (cart.length === 0) 
+    {
+      cartContainer.innerHTML = `<div class="cart-empty">🌾 Your basket is empty. Support local farmers!</div>`;
+      if (totalSpan) totalSpan.innerText = "KES 0";
+      return;
+    }
+    
+    let cartHtml = "";
+    let overallTotal = 0;
+    cart.forEach((item, idx) => 
+    {
+      const opt = item.selectedOptions;
+      const optionText = `${opt.location} | ${opt.demand} demand | ${opt.supplier} | ${opt.quality}`;
+      overallTotal += item.totalPrice;
+      cartHtml += `
+        <div class="cart-item" data-cart-index="${idx}">
+          <img class="cart-item-img" src="${item.img}" onerror="this.src='https://picsum.photos/id/129/55/55'">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name} (${item.unit})</div>
+            <div class="cart-item-options">${optionText}</div>
+            <div class="cart-item-price">KES ${item.pricePerUnit} / ${item.unit.split(' ')[0]}</div>
+            <div class="cart-item-actions">
+              <button class="cart-qty-btn cart-decr" data-idx="${idx}">−</button>
+              <span style="font-weight:600; margin:0 4px;">${item.quantity}</span>
+              <button class="cart-qty-btn cart-incr" data-idx="${idx}">+</button>
+              <button class="cart-remove" data-idx="${idx}"><i class="fas fa-trash-alt"></i></button>
+            </div>
+          </div>
+          <div style="font-weight:700;">KES ${item.totalPrice}</div>
+        </div>
+      `;
+    });
+    cartContainer.innerHTML = cartHtml;
+    if (totalSpan) totalSpan.innerText = `KES ${overallTotal.toFixed(2)}`;
+    
+    // Attach cart event handlers
+    document.querySelectorAll('.cart-decr').forEach(btn => 
+    {
+      btn.addEventListener('click', (e) => 
+      {
+        const idx = parseInt(btn.dataset.idx);
+        if (!isNaN(idx) && cart[idx]) 
+        {
+          if (cart[idx].quantity > 1) 
+          {
+            cart[idx].quantity--;
+            cart[idx].totalPrice = +(cart[idx].pricePerUnit * cart[idx].quantity).toFixed(2);
+          } else 
+          {
+            cart.splice(idx, 1);
+          }
+          saveCart();
+          renderCartUI();
+          updateCartBadge();
+        }
+      });
+    });
+    document.querySelectorAll('.cart-incr').forEach(btn => 
+    {
+      btn.addEventListener('click', () => 
+      {
+        const idx = parseInt(btn.dataset.idx);
+        if (!isNaN(idx) && cart[idx]) 
+        {
+          cart[idx].quantity++;
+          cart[idx].totalPrice = +(cart[idx].pricePerUnit * cart[idx].quantity).toFixed(2);
+          saveCart();
+          renderCartUI();
+          updateCartBadge();
+        }
+      });
+    });
+    document.querySelectorAll('.cart-remove').forEach(btn => 
+    {
+      btn.addEventListener('click', () => 
+      {
+        const idx = parseInt(btn.dataset.idx);
+        if (!isNaN(idx)) {
+          cart.splice(idx, 1);
+          saveCart();
+          renderCartUI();
+          updateCartBadge();
+        }
+      });
+    });
+  }
+  
+  // Clear cart handler
+  function setupGlobalActions() 
+  {
+    const clearBtn = document.getElementById("clearCartBtn");
+    if (clearBtn) 
+    {
+      clearBtn.addEventListener("click", () => 
+      {
+        if (cart.length && confirm("Remove all items from basket?")) 
+        {
+          cart = [];
+          saveCart();
+          renderCartUI();
+          updateCartBadge();
+        }
+      });
+    }
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", () => 
+      {
+        if (cart.length === 0) 
+        {
+          alert("Your basket is empty. Please add fresh produce.");
+          return;
+        }
+        let total = cart.reduce((sum, i) => sum + i.totalPrice, 0);
+        let itemSummary = cart.map(i => `${i.name} x${i.quantity} (${i.selectedOptions.location})`).join(", ");
+        alert(`✅ Order received! 🌍 Thank you for supporting Kenyan farmers.\n\nItems: ${itemSummary}\nTotal: KES ${total.toFixed(2)}\n\nYour produce will be delivered based on location pricing. Asante sana!`);
+        // Optional: keep cart or reset? Usually keep for demo but we can clear if needed. Better to let user decide.
+        // For better experience, we can ask: "Clear cart after order?" but we'll just keep for flexibility.
+        // But many e-com sites keep cart until user clears. We'll not auto-clear.
+      });
+    }
+  }
+  
+  // Initialization
+  function init() 
+  {
+    loadCart();        // loads cart from storage
+    renderProducts();  // build dynamic product cards
+    setupGlobalActions();
+  }
+  
+  init();
+</script>
+</body>
+</html>
